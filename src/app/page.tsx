@@ -1,95 +1,50 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { QuickSpeak } from "@/components/shared/QuickSpeak";
+import { HeroTitle } from "./components/HeroTitle";
+import { Flex, Title, Text, Container, Stack, Blockquote, Button } from "@mantine/core";
+import { LogoComponent } from "@/components/shared/LogoComponent";
+import { IconInfoCircle } from "@tabler/icons-react";
 
-export default function Home() {
+
+export default function LandingPage() {
+
+  const icon = <IconInfoCircle />;
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    <>
+      <Container size={800} p={'md'}>
+        <Flex align={'center'} gap={'md'} justify={'space-between'}>
+          <Flex gap={'md'} align={'center'}>
+            <LogoComponent size="XL" />
+            <Title order={1} size={50}>INTERVALS</Title>
+          </Flex>
+          <QuickSpeak />
+
+
+        </Flex>
+      </Container>
+      <HeroTitle />
+
+
+
+      <Container size={800} p={'md'} mt="lg">
+        <Stack gap={'lg'}>
+
+          <Blockquote color="blue" icon={icon}>
+            Мы сделали простой и понятный AI-сервис дашбордов с функциями выгрузки данных с помощью открытого API, создания на базе данных графиков и вспомогательного контента и удобной системой шеринга готовых дашбордов без паролей и прочих сложностей.
+          </Blockquote>
+          <Text >
+            Все кроме технической поддержки
+            и АИ-интеграций сервис работает <strong>бесплатно и без ограничений</strong>.
+            Специальным клиентам предлагаем: разработку и поддержку дашбордов, разработку прямых интеграций INTERVALS с источниками данных, техническую поддержку.
+          </Text>
+          <Button gradient={{ from: 'blue', to: 'cyan' }} component='a' href="/oauth" fullWidth variant="gradient" size='xl'>Зарегистрироваться</Button>
+        </Stack>
+      </Container>
+      <QuickSpeak />
+
+    </>
+
+
   );
 }

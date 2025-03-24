@@ -1,0 +1,21 @@
+.logo {
+    width: 40px;
+    height: fit-content;
+    transition: .2s;
+}
+
+.logo:hover {
+    filter: drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.25));
+}
+
+.sizeXL {
+    width: 80px;
+}
+
+
+@media (max-width:768px) {
+    .logo {
+        width: 40px;
+        height: fit-content;
+    }
+}
