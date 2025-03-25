@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 
 
 export const metadata: Metadata = {
-  title: "Авторизация | INTERVALS",
+  title: "INTERVALS. Простая визуализация данных с GPT-интеграцией",
 };
 
 export default function RootLayout({

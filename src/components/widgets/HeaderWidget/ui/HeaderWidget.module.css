@@ -46,6 +46,11 @@
     }
 }
 
+.mail {
+    text-transform: uppercase;
+    font-size: var(--mantine-font-size-xs);
+}
+
 .secondaryLink {
     color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-1));
     font-size: var(--mantine-font-size-xs);

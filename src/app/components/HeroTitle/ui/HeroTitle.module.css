@@ -17,18 +17,14 @@
 
 .title {
     font-family:
-        Greycliff CF,
         var(--mantine-font-family);
-    font-size: 62px;
+    line-height: 120%;
+    font-size: 42;
     font-weight: 900;
     margin: 0;
     padding: 0;
     color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
 
-    @media (max-width: $mantine-breakpoint-sm) {
-        font-size: 42px;
-        line-height: 1.2;
-    }
 }
 
 .description {

@@ -1,6 +1,6 @@
 'use client'
 
-import { Anchor, Container, Group } from '@mantine/core';
+import { Anchor, Group } from '@mantine/core';
 
 import classes from './FooterWidget.module.css'
 
