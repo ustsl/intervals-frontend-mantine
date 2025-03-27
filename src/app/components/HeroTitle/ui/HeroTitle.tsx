@@ -13,14 +13,13 @@ export const HeroTitle = () => {
                     <h1 className={classes.title} >
                         Умные{' '}
                         <Text component="span" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }} inherit>
-                            дашборды для бизнеса на основе любых данных
+                            дашборды для бизнеса
                         </Text>
                     </h1>
 
                     <Text className={classes.description} c="var(--mantine-color-gray-9)">
-                        Визуализируйте данные в красивые BI-дашборды.
-                        Создавайте сложные кастомизированные отчеты. Интегрируйте сервисы
-                        с INTERVALS с помощью гибкого API. <strong>Бесплатно.</strong>
+                        Визуализируйте данные в дашборды.
+                        Создавайте сложные кастомизированные отчеты. Пишите интеграции под гибкий API сервиса.
                     </Text>
 
                     <Button

@@ -2,57 +2,36 @@
 
 import React, { useEffect, useState } from "react";
 import { CardList, IItems } from "@/components/shared/CardList";
-import { fetchWithAuth } from "@/api/fetchWithAuth";
-import { baseEntities } from "@/types/base";
 import { Loader } from "@mantine/core";
-
-interface ItemsResponse {
-    total: number;
-    offset: number;
-    containers: IItems[];
-}
-
-interface IItemsEntity {
-    getQuery: string;
-    anchor: baseEntities;
-}
+import { IItemsEntity } from "./items.props";
+import { fetchItems } from "./items.service";
 
 export const ItemsEntity = ({ getQuery, anchor }: IItemsEntity) => {
+    const [title] = useState("")
     const [items, setItems] = useState<IItems[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const limit = 50;
 
     useEffect(() => {
-        const loadDashboards = async () => {
+        const loadItems = async () => {
             setLoading(true);
             setError(null);
             try {
-                const response = await fetchWithAuth(
-                    `${getQuery}?limit=${limit}`
-                );
-
-
-                if (!response.ok) {
-                    const errData = await response.json();
-                    throw new Error(errData.message || `Ошибка ${response.status}`);
-                }
-                const data: ItemsResponse = await response.json();
-                setItems(data.containers);
+                const itemsData = await fetchItems(getQuery, title);
+                setItems(itemsData);
             } catch (err: unknown) {
-                if (err && typeof err === 'object' && 'message' in err) {
+                if (err && typeof err === "object" && "message" in err) {
                     setError((err as { message?: string }).message || "Произошла неизвестная ошибка");
                 } else {
                     setError("Произошла неизвестная ошибка");
                 }
-
             } finally {
                 setLoading(false);
             }
         };
 
-        loadDashboards();
-    }, []);
+        loadItems();
+    }, [getQuery, title]);
 
     if (loading) {
         return <Loader color="cyan" size="xl" type="dots" />;
