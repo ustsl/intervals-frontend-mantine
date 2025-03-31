@@ -1,0 +1,1 @@
+export { ObjectHeaderFeature } from "./ui/ObjectHeaderFeature";

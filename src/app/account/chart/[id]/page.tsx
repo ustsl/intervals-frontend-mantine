@@ -1,11 +1,11 @@
-import { Title } from "@mantine/core";
 import { ChartWidget } from "./components/ChartWidget";
 
-export default function Object() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function Object(props: { params: Promise<any> }) {
+    const params = await props.params;
     return (
-        <>
-            <Title>Объект</Title>
-            <ChartWidget />
-        </>
+
+        <ChartWidget id={params.id} />
+
     );
 }

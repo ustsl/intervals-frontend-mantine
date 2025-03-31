@@ -22,4 +22,5 @@ export interface ItemsEntitySelectProps {
     anchor: baseEntities;
     defaultId: string | null;
     onClick: (selected: IItems) => void;
+    setIsChanged?: (data: boolean) => void;
 }

@@ -10,6 +10,7 @@ export const ItemsEntitySelect: React.FC<ItemsEntitySelectProps> = ({
     anchor,
     defaultId,
     onClick,
+    setIsChanged
 }) => {
     const [items, setItems] = useState<IItems[]>([]);
     const [selectedValue, setSelectedValue] = useState<string | null>(defaultId);
@@ -46,6 +47,10 @@ export const ItemsEntitySelect: React.FC<ItemsEntitySelectProps> = ({
             const selectedItem = items.find((item) => item.id === value);
             if (selectedItem) {
                 onClick({ id: selectedItem.id, title: selectedItem.title, time_update: selectedItem.time_update });
+                if (setIsChanged) {
+                    setIsChanged(true);
+                }
+
             }
         }
     };
