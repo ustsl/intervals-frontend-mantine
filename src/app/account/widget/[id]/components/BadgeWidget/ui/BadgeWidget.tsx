@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Grid } from '@mantine/core';
+import { Grid, TextInput, NumberInput } from '@mantine/core';
 import { ItemsEntitySelect } from '@/components/entities/ItemsEntity';
 import { ObjectHeaderFeature } from '@/components/features/ObjectHeaderFeature';
 import { ObjectSaverFeature, saveObject } from '@/components/features/ObjectSaverFeature';
@@ -9,70 +9,49 @@ import { ObjectWrapper } from '@/components/shared/ObjectWrapper';
 import { useLoadData } from '@/hooks/useLoadData';
 
 import { IItems } from '@/components/shared/CardList';
-import { ChartItemEntity } from '@/components/entities/ChartItemEntity';
-import { ChartResponse } from '@/types/chart';
-import { ChartSettingsComponent, useChartSettings } from './components/ChartSettingsComponent';
 
+import { WidgetResponse } from '@/types/widget';
+import { WidgetItemEntity } from '@/components/entities/WidgetItemEntity';
 
-export const ChartWidget = ({ id }: { id: string }) => {
-    const { data, loading, error, refresh } = useLoadData<ChartResponse>(`https://api.intervals.ru/chart/${id}`);
+export const BadgeWidget = ({ id }: { id: string }) => {
+    const { data, loading, error, refresh } = useLoadData<WidgetResponse>(`https://api.intervals.ru/widget/${id}`);
 
     const [selectedDataItem, setSelectedDataItem] = useState<null | IItems>(null);
     const [dataIsChanged, setDataIsChanged] = useState(false);
     const [editedTitle, setEditedTitle] = useState<string>('');
-
-    const {
-        settings: editedSettings,
-        handleAxisXChange,
-        handleAxisYChange,
-        addAxisY,
-        deleteAxisY,
-        setSettings,
-    } = useChartSettings({
-        axisX: null,
-        axisY: [],
-    });
+    const [dataColumn, setDataColumn] = useState<string>('');
+    const [offsetForComparison, setOffsetForComparison] = useState<number>(0);
 
     // При загрузке данных устанавливаем заголовок и настройки
     useEffect(() => {
         if (data) {
             setEditedTitle(data.title);
-            setSettings({
-                axisX: data.settings?.axisX || '',
-                axisY: data.settings?.axisY || [],
-            });
+            setDataColumn(data.data_column || '');
+            setOffsetForComparison(data.offset_for_comparison || 0);
         }
-    }, [data, setSettings]);
-
+    }, [data]);
 
     useEffect(() => {
         if (dataIsChanged) {
             const saveData = async () => {
                 try {
-                    await saveObject(`https://api.intervals.ru/chart/${id}`, {
-                        title: editedTitle,
+                    await saveObject(`https://api.intervals.ru/widget/${id}`, {
                         data: selectedDataItem ? selectedDataItem.id : null,
-                        settings: editedSettings,
+                        data_column: dataColumn,
+                        offset_for_comparison: offsetForComparison,
                     });
                 } catch (err) {
                     console.error('Ошибка сохранения:', err);
                 } finally {
                     setDataIsChanged(false);
-                    refresh()
+                    refresh();
                 }
             };
 
             saveData();
         }
-    }, [dataIsChanged, id, editedTitle, selectedDataItem, editedSettings]);
-
-    // Доступные поля из data_relation, если они есть
-    const availableFields =
-        data && data?.container && data.container.length > 0
-            ? Object.keys(data.container[0]).map(key => ({ value: key, label: key }))
-            : [];
-
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dataIsChanged, id, refresh, selectedDataItem]);
 
     if (!data) {
         return <></>;
@@ -86,39 +65,48 @@ export const ChartWidget = ({ id }: { id: string }) => {
                 timeUpdate={data.time_update}
             />
 
-            <ItemsEntitySelect anchor="data"
+            <ItemsEntitySelect
+                anchor="data"
                 onClick={setSelectedDataItem}
                 defaultId={data.data}
-                setIsChanged={setDataIsChanged} />
+                setIsChanged={setDataIsChanged}
+            />
 
             <Grid>
                 {/* Левая колонка – настройки */}
                 <Grid.Col span={5}>
-                    <ChartSettingsComponent
-                        availableFields={availableFields}
-                        editedSettings={editedSettings}
-                        handleAxisXChange={handleAxisXChange}
-                        handleAxisYChange={handleAxisYChange}
-                        addAxisY={addAxisY}
-                        deleteAxisY={deleteAxisY}
+                    <TextInput
+                        label="Data Column"
+                        value={dataColumn}
+                        onChange={(e) => {
+                            setDataColumn(e.currentTarget.value);
+                        }}
+                        placeholder="Введите имя столбца"
+                    />
+                    <NumberInput
+                        mt="md"
+                        label="Offset for Comparison"
+                        value={offsetForComparison}
+                        onChange={(value) => {
+                            setOffsetForComparison(value as number || 0);
+                        }}
+                        placeholder="Введите оффсет"
                     />
                 </Grid.Col>
 
                 {/* Правая колонка – отображение графика */}
                 <Grid.Col span={7}>
-                    <ChartItemEntity
-                        data={data.container || []}
-                        settings={editedSettings}
-                    />
+                    <WidgetItemEntity item={data} />
                 </Grid.Col>
             </Grid>
 
             <ObjectSaverFeature
-                url={`https://api.intervals.ru/chart/${id}`}
+                url={`https://api.intervals.ru/widget/${id}`}
                 body={{
                     title: editedTitle,
                     data: selectedDataItem ? selectedDataItem.id : null,
-                    settings: editedSettings,
+                    data_column: dataColumn,
+                    offset_for_comparison: offsetForComparison,
                 }}
             />
         </ObjectWrapper>

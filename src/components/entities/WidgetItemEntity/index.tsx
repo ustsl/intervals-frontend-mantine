@@ -1,0 +1,1 @@
+export { WidgetItemEntity } from "./ui/WidgetItemEntity";

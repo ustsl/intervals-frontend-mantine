@@ -1,4 +1,4 @@
-import { DataResponse } from "./data";
+import { DataContainerRow } from "./data";
 
 export type UUID = string;
 
@@ -19,5 +19,5 @@ export interface ChartResponse {
     time_update: string;
     data: UUID | null;
     settings: ChartSettings | null;
-    data_relation: DataResponse | null;
+    container: null | DataContainerRow[];
 }

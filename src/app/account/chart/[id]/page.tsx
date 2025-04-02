@@ -4,8 +4,6 @@ import { ChartWidget } from "./components/ChartWidget";
 export default async function Object(props: { params: Promise<any> }) {
     const params = await props.params;
     return (
-
         <ChartWidget id={params.id} />
-
     );
 }
