@@ -107,8 +107,7 @@ export const ChartWidget = ({ id }: { id: string }) => {
                 {/* Правая колонка – отображение графика */}
                 <Grid.Col span={7}>
                     <ChartItemEntity
-                        data={data.container || []}
-                        settings={editedSettings}
+                        chart={{ ...data, title: editedTitle, settings: editedSettings }}
                     />
                 </Grid.Col>
             </Grid>

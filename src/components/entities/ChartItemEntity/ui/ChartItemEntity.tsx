@@ -1,15 +1,12 @@
 'use client';
 
-import { Stack, Text } from '@mantine/core';
+import { Badge, Flex, Stack, Text, Title } from '@mantine/core';
 import { CompositeChart } from '@mantine/charts';
-import { ChartSettings } from '@/types/chart';
-import { DataContainerRow } from '@/types/data';
+import { ChartResponse, } from '@/types/chart';
+import { dateFormatter } from '@/functions/date';
 
 
-export interface ChartItemEntityProps {
-    data: DataContainerRow[];
-    settings: ChartSettings;
-}
+
 
 const colorMapping: Record<number, string> = {
     0: 'blue.6',
@@ -24,10 +21,17 @@ const colorMapping: Record<number, string> = {
     9: 'red.6'
 };
 
-export const ChartItemEntity = ({ data, settings }: ChartItemEntityProps) => {
+export const ChartItemEntity = ({ chart }: { chart: ChartResponse }) => {
+
+    const data = chart.container
+    const settings = chart.settings
+
+    if (!data) {
+        return
+    }
 
     // Определяем доступные поля из данных (ключи первого элемента)
-    const availableFields = data.length > 0 ? Object.keys(data[0]) : [];
+    const availableFields = data && (data).length > 0 ? Object.keys(data[0]) : [];
 
     // Проверка: выбрана ось X и для каждой оси Y выбранное поле присутствует в данных
     const canRenderChart =
@@ -71,12 +75,19 @@ export const ChartItemEntity = ({ data, settings }: ChartItemEntityProps) => {
     return (
         <>
             {series &&
-                <CompositeChart
-                    data={processedChartData}
-                    dataKey={"x"}
-                    series={series}
-                    h={300}
-                />
+                <Stack gap={'xs'}>
+                    <Flex justify={'space-between'}>
+                        <Title order={4}>{chart.title}</Title>
+                        <Badge size="sm" color="pink">{dateFormatter(chart.time_update)}</Badge>
+                    </Flex>
+
+                    <CompositeChart
+                        data={processedChartData}
+                        dataKey={"x"}
+                        series={series}
+                        h={300}
+                    />
+                </Stack >
             }
         </>
 

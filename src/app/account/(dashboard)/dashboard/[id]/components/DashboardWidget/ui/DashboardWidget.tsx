@@ -19,6 +19,7 @@ import { deleteItem, fetchOptions } from './func';
 
 
 
+
 export const DashboardWidget = ({ id }: { id: string }) => {
     // Загрузка данных дашборда
     const { data, loading, error } = useLoadData<DashboardResponse>(`https://api.intervals.ru/dashboard/${id}`);
@@ -189,6 +190,8 @@ export const DashboardWidget = ({ id }: { id: string }) => {
             </Grid>
 
             {/* Сохранение дашборда */}
+
+
             <ObjectSaverFeature
                 url={`https://api.intervals.ru/dashboard/${id}`}
                 body={{

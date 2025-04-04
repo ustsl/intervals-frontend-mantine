@@ -34,7 +34,10 @@ export default function LandingPage() {
             написание любых интеграций, AI-системы анализа данных,
             техническую поддержку на всех этапах.
           </Text>
-          <Button gradient={{ from: 'blue', to: 'cyan' }} component='a' href="/oauth" fullWidth variant="gradient" size='xl'>Зарегистрироваться</Button>
+          <Button
+            gradient={{ from: 'blue', to: 'cyan' }} component='a' href="/oauth" fullWidth variant="gradient" size='xl'>
+            Авторизоваться
+          </Button>
         </Stack>
       </Container>
 

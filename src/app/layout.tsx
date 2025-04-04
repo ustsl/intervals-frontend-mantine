@@ -31,15 +31,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <head>
         <ColorSchemeScript />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <MantineProvider>
-
           {children}
-
           <Notifications />
         </MantineProvider>
       </body>
