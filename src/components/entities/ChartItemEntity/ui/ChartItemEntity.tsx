@@ -75,7 +75,7 @@ export const ChartItemEntity = ({ chart }: { chart: ChartResponse }) => {
     return (
         <>
             {series &&
-                <Stack gap={'xs'}>
+                <Stack gap={'sm'}>
                     <Flex justify={'space-between'}>
                         <Title order={4}>{chart.title}</Title>
                         <Badge size="sm" color="pink">{dateFormatter(chart.time_update)}</Badge>
@@ -87,6 +87,7 @@ export const ChartItemEntity = ({ chart }: { chart: ChartResponse }) => {
                         series={series}
                         h={300}
                     />
+                    {chart.info && <Text c="dark" size='sm'>{chart.info}</Text>}
                 </Stack >
             }
         </>

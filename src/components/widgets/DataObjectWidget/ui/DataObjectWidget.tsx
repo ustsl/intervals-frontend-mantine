@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Table, Text, Input } from '@mantine/core';
+import { Table, Text, Input, Textarea } from '@mantine/core';
 import { ObjectHeaderFeature } from '@/components/features/ObjectHeaderFeature';
 import { ObjectSaverFeature } from '@/components/features/ObjectSaverFeature';
 import { useLoadData } from '@/hooks/useLoadData';
@@ -14,12 +14,14 @@ export const DataObjectWidget = ({ id }: { id: string }) => {
     // Локальное состояние для редактирования
     const [editedTitle, setEditedTitle] = useState<string>('');
     const [editedContainer, setEditedContainer] = useState<DataContainerRow[]>([]);
+    const [editedInfo, setEditedInfo] = useState<string>('');
 
     // useEffect для установки состояния при загрузке данных
     useEffect(() => {
         if (data) {
             setEditedTitle(data.title);
             setEditedContainer(data.container || []);
+            setEditedInfo(data.info || '');
         }
     }, [data]);
 
@@ -76,11 +78,20 @@ export const DataObjectWidget = ({ id }: { id: string }) => {
                 <Table.Tbody>{rows}</Table.Tbody>
             </Table>
 
+            <Textarea
+                mt="md"
+                label="Информация"
+                value={editedInfo}
+                onChange={(e) => setEditedInfo(e.currentTarget.value)}
+                placeholder="Введите информацию"
+            />
+
             <ObjectSaverFeature
                 url={`https://api.intervals.ru/data/${id}`}
                 body={{
                     title: editedTitle,
                     container: editedContainer,
+                    info: editedInfo
                 }}
             />
         </ObjectWrapper>

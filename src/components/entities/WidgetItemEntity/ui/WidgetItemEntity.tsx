@@ -4,52 +4,46 @@ import { Badge, Card, Stack, Text } from "@mantine/core"
 
 export const WidgetItemEntity = ({ item }: { item: WidgetResponse }) => {
     const data = item?.container
-    const offset = item?.offset_for_comparison
     const column = item?.data_column
 
-    if (
-        !data ||
-        !Array.isArray(data) ||
-        !offset ||
-        data.length < offset ||
-        !column
-    ) {
-        return null
+    if (!data || !Array.isArray(data) || !column) return null
+
+    // Определяем базовое и сравниваемое значение в зависимости от is_reversed
+    let baseValue: number | undefined
+    let compareValue: number | undefined
+
+    if (item.is_reversed) {
+        if (data.length < 2) return null
+        baseValue = data[data.length - 1][column] as number
+        compareValue = data[data.length - 2][column] as number
+    } else {
+        const offset = item?.offset_for_comparison
+        if (!offset || data.length < offset + 1) return null
+        baseValue = data[0][column] as number
+        compareValue = data[offset][column] as number
     }
 
-    const firstRowValue = data[0][column] as number
-    const offsetRowValue = data[offset][column] as number
+    if (baseValue === undefined || compareValue === undefined) return null
 
-    if (firstRowValue === undefined || offsetRowValue === undefined) {
-        return null
-    }
-
-    const diffPercent = ((offsetRowValue - firstRowValue) / firstRowValue) * 100
+    const diffPercent = ((compareValue - baseValue) / baseValue) * 100
     const formattedDiff = diffPercent.toFixed(1)
 
-
-    let badgeColor: "green" | "yellow" | "red"
-    if (offsetRowValue < firstRowValue) {
-        badgeColor = "green"
-    } else if (diffPercent < 3) {
-        badgeColor = "yellow"
-    } else {
-        badgeColor = "red"
-    }
+    const badgeColor: "green" | "yellow" | "red" =
+        compareValue < baseValue ? "green" : diffPercent < 3 ? "yellow" : "red"
 
     return (
-        <div className={styles.block}>
-            <Card shadow="sm" padding="lg" radius="md" withBorder>
-                <Stack gap="xs">
-                    <Text c="gray" size="xs">
-                        {item.title} ({item.data_column})
-                    </Text>
-                    {firstRowValue}
-                    <Badge color={badgeColor}>
-                        {offsetRowValue} ({formattedDiff}%)
-                    </Badge>
-                </Stack>
-            </Card>
-        </div >
+
+        <Card shadow="sm" padding="lg" radius="md" withBorder className={styles.block}>
+            <Stack gap="xs">
+                <Text c="gray" size="xs">
+                    {item.title} ({item.data_column})
+                </Text>
+                <Text>{baseValue}</Text>
+                <Badge color={badgeColor}>
+                    {compareValue} ({formattedDiff}%)
+                </Badge>
+            </Stack>
+        </Card>
+
     )
 }

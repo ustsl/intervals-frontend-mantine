@@ -5,4 +5,5 @@ export interface DataResponse {
     time_create: string;
     time_update: string;
     container: null | DataContainerRow[];
+    info: string;
 }

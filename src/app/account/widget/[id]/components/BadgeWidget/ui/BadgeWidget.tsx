@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Grid, TextInput, NumberInput } from '@mantine/core';
+import { Grid, TextInput, NumberInput, Checkbox } from '@mantine/core';
 import { ItemsEntitySelect } from '@/components/entities/ItemsEntity';
 import { ObjectHeaderFeature } from '@/components/features/ObjectHeaderFeature';
 import { ObjectSaverFeature, saveObject } from '@/components/features/ObjectSaverFeature';
@@ -21,6 +21,7 @@ export const BadgeWidget = ({ id }: { id: string }) => {
     const [editedTitle, setEditedTitle] = useState<string>('');
     const [dataColumn, setDataColumn] = useState<string>('');
     const [offsetForComparison, setOffsetForComparison] = useState<number>(0);
+    const [isReversed, setIsReversed] = useState<boolean>(false);
 
     // При загрузке данных устанавливаем заголовок и настройки
     useEffect(() => {
@@ -28,6 +29,7 @@ export const BadgeWidget = ({ id }: { id: string }) => {
             setEditedTitle(data.title);
             setDataColumn(data.data_column || '');
             setOffsetForComparison(data.offset_for_comparison || 0);
+            setIsReversed(data.is_reversed || false);
         }
     }, [data]);
 
@@ -39,6 +41,7 @@ export const BadgeWidget = ({ id }: { id: string }) => {
                         data: selectedDataItem ? selectedDataItem.id : null,
                         data_column: dataColumn,
                         offset_for_comparison: offsetForComparison,
+                        is_reversed: isReversed
                     });
                 } catch (err) {
                     console.error('Ошибка сохранения:', err);
@@ -51,7 +54,7 @@ export const BadgeWidget = ({ id }: { id: string }) => {
             saveData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dataIsChanged, id, refresh, selectedDataItem]);
+    }, [dataIsChanged, id, refresh, selectedDataItem, dataColumn, offsetForComparison, isReversed]);
 
     if (!data) {
         return <></>;
@@ -76,7 +79,7 @@ export const BadgeWidget = ({ id }: { id: string }) => {
                 {/* Левая колонка – настройки */}
                 <Grid.Col span={5}>
                     <TextInput
-                        label="Data Column"
+                        label="Имя колонки виджета"
                         value={dataColumn}
                         onChange={(e) => {
                             setDataColumn(e.currentTarget.value);
@@ -85,12 +88,18 @@ export const BadgeWidget = ({ id }: { id: string }) => {
                     />
                     <NumberInput
                         mt="md"
-                        label="Offset for Comparison"
+                        label="Отступ для сравнения"
                         value={offsetForComparison}
                         onChange={(value) => {
-                            setOffsetForComparison(value as number || 0);
+                            setOffsetForComparison((value as number) || 0);
                         }}
                         placeholder="Введите оффсет"
+                    />
+                    <Checkbox
+                        mt="md"
+                        label="перевернуть данные"
+                        checked={isReversed}
+                        onChange={(e) => setIsReversed(e.currentTarget.checked)}
                     />
                 </Grid.Col>
 
@@ -107,6 +116,7 @@ export const BadgeWidget = ({ id }: { id: string }) => {
                     data: selectedDataItem ? selectedDataItem.id : null,
                     data_column: dataColumn,
                     offset_for_comparison: offsetForComparison,
+                    is_reversed: isReversed
                 }}
             />
         </ObjectWrapper>

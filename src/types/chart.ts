@@ -20,4 +20,5 @@ export interface ChartResponse {
     data: UUID | null;
     settings: ChartSettings | null;
     container: null | DataContainerRow[];
+    info: string;
 }
