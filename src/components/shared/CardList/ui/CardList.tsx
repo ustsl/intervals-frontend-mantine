@@ -9,7 +9,7 @@ export interface IItems {
 
 export const CardList = ({ items, anchor }: { items: IItems[], anchor: string }) => {
     return (
-        <Grid pt={'xl'}>
+        <Grid>
             {items.map(item => {
                 return (
                     <Grid.Col key={item.id} span={{ base: 12, md: 6, lg: 3 }}>

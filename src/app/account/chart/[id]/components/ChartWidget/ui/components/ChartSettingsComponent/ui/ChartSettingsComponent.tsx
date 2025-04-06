@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Title, Select, Button, Stack, Flex, ActionIcon } from '@mantine/core';
+import { Title, Select, Button, Stack, Flex, ActionIcon, Text } from '@mantine/core';
 import { IconLibraryPlus, IconBackspace } from '@tabler/icons-react';
 import { AxisY, ChartSettings } from '@/types/chart';
 
@@ -33,6 +33,9 @@ export const ChartSettingsComponent: React.FC<ChartSettingsProps> = ({
                 onChange={value => handleAxisXChange(value || '')}
             />
             <Title order={5}>Оси Y</Title>
+            {!editedSettings.axisY || (editedSettings.axisY).length === 0 && <Text c="orange">
+                Внимание: не выбраны оси Y. Вместо графика отображается таблица.
+            </Text>}
             {editedSettings.axisY &&
                 editedSettings.axisY.map((axis, index) => (
                     <Flex key={index} align="flex-end" gap="xs">

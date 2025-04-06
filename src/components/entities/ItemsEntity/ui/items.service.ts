@@ -5,7 +5,7 @@ import { ItemsResponse, IItems } from "./items.props";
 const LIMIT = 50;
 
 export async function fetchItems(baseQuery: string, title?: string): Promise<IItems[]> {
-    let url = `${baseQuery}?limit=${LIMIT}`;
+    let url = `${baseQuery}&limit=${LIMIT}`;
     if (title) {
         url += `&title=${encodeURIComponent(title)}`;
     }

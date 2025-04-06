@@ -1,15 +1,18 @@
 import { CreateEntity } from "@/components/entities/CreateEntity"
+import { FilterBlockComponent } from "@/components/entities/FilterBlockComponent"
 import { ItemsEntity } from "@/components/entities/ItemsEntity"
 import { DOMAIN } from "@/const"
 import { baseEntities } from "@/types/base"
-import { Group, Title } from "@mantine/core"
 
-export const ListWidget = ({ anchor, title, crTitle }: { anchor: baseEntities, title: string, crTitle: string }) => {
+import { Group, Stack, Title } from "@mantine/core"
 
-    const url = `${DOMAIN}/${anchor}`
+export const ListWidget = ({ anchor, params, title, crTitle }:
+    { anchor: baseEntities, params: string; title: string, crTitle: string }) => {
+
+    const url = `${DOMAIN}/${anchor}?${params}`
 
     return (
-        <>
+        <Stack gap={'md'}>
             <Group gap={'xl'}>
                 <Title order={1}>{title}</Title>
                 <CreateEntity
@@ -17,7 +20,8 @@ export const ListWidget = ({ anchor, title, crTitle }: { anchor: baseEntities, t
                     createQuery={url}
                     anchor={anchor} />
             </Group>
+            <FilterBlockComponent />
             <ItemsEntity getQuery={url} anchor={anchor} />
-        </>
+        </Stack>
     )
 }
