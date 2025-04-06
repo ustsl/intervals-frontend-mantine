@@ -24,7 +24,6 @@ export default function LandingPage() {
       <HeroTitle />
       <Container size={800} p={'md'} mt="lg">
         <Stack gap={'lg'}>
-
           <Blockquote color="blue" icon={icon}>
             Мы сделали сервис дашбордов с функциями выгрузки данных, возможностями АИ-интеграции, удобной системой шеринга готовых дашбордов без паролей и прочих преград.
           </Blockquote>

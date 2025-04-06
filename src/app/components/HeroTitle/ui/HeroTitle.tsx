@@ -8,8 +8,6 @@ export const HeroTitle = () => {
         <div className={classes.wrapper}>
             <Container size={800} className={classes.inner}>
                 <Stack gap={'lg'}>
-
-
                     <h1 className={classes.title} >
                         Умные{' '}
                         <Text component="span" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }} inherit>
