@@ -15,7 +15,7 @@ export const ItemsEntitySelect: React.FC<ItemsEntitySelectProps> = ({
     const [items, setItems] = useState<IItems[]>([]);
     const [selectedValue, setSelectedValue] = useState<string | null>(defaultId);
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const getQuery = `${DOMAIN}/${anchor}`;
+    const getQuery = `${DOMAIN}/${anchor}?`;
 
     useEffect(() => {
         const handler = setTimeout(() => {

@@ -1,12 +1,15 @@
 'use client';
 
+import styles from './DataObjectWidget.module.css'
+
 import { useState, useEffect } from 'react';
-import { Table, Text, Input, Textarea } from '@mantine/core';
+import { Table, Text, Input, Textarea, ScrollArea } from '@mantine/core';
 import { ObjectHeaderFeature } from '@/components/features/ObjectHeaderFeature';
 import { ObjectSaverFeature } from '@/components/features/ObjectSaverFeature';
 import { useLoadData } from '@/hooks/useLoadData';
 import { DataContainerRow, DataResponse } from '@/types/data';
 import { ObjectWrapper } from '@/components/shared/ObjectWrapper';
+
 
 export const DataObjectWidget = ({ id }: { id: string }) => {
     const { data, loading, error } = useLoadData<DataResponse>(`https://api.intervals.ru/data/${id}`);
@@ -37,25 +40,22 @@ export const DataObjectWidget = ({ id }: { id: string }) => {
         return <Text>Нет данных</Text>;
     }
 
-    if (!data.container || data.container.length === 0) {
-        return <Text>Нет данных для отображения</Text>;
-    }
-
     // Получаем названия столбцов из первой строки контейнера
-    const columns = Object.keys(data.container[0]);
+    const columns = data?.container && Object.keys(data.container[0]);
 
     const headerRow = (
         <Table.Tr>
-            {columns.map((col) => (
+            {columns && columns.map((col) => (
                 <Table.Th key={col}>{col}</Table.Th>
             ))}
         </Table.Tr>
     );
 
     const rows = editedContainer.map((item, rowIndex) => (
+
         <Table.Tr key={rowIndex}>
-            {columns.map((col) => (
-                <Table.Td key={col}>
+            {columns && columns.map((col) => (
+                <Table.Td key={col} className={styles.td}>
                     <Input
                         value={String(item[col])}
                         onChange={(e) => handleCellChange(rowIndex, col, e.target.value)}
@@ -63,6 +63,7 @@ export const DataObjectWidget = ({ id }: { id: string }) => {
                 </Table.Td>
             ))}
         </Table.Tr>
+
     ));
 
     return (
@@ -73,10 +74,14 @@ export const DataObjectWidget = ({ id }: { id: string }) => {
                 timeUpdate={data.time_update}
             />
 
-            <Table stickyHeader stickyHeaderOffset={60}>
-                <Table.Thead>{headerRow}</Table.Thead>
-                <Table.Tbody>{rows}</Table.Tbody>
-            </Table>
+            {(!data.container || data.container.length === 0) ? <Text>Нет данных для отображения</Text>
+                :
+                <ScrollArea w={1200}>
+                    <Table>
+                        <Table.Thead>{headerRow}</Table.Thead>
+                        <Table.Tbody>{rows}</Table.Tbody>
+                    </Table>
+                </ScrollArea>}
 
             <Textarea
                 mt="md"

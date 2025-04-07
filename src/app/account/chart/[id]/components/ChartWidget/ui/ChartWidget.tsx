@@ -64,7 +64,7 @@ export const ChartWidget = ({ id }: { id: string }) => {
 
             saveData();
         }
-    }, [dataIsChanged, id, editedTitle, selectedDataItem, editedSettings]);
+    }, [dataIsChanged, id, editedTitle, selectedDataItem, editedSettings, refresh]);
 
     // Доступные поля из data_relation, если они есть
     const availableFields =
