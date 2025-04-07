@@ -5,7 +5,7 @@ export default async function Widgets(props: { searchParams: Promise<ISearchPara
 
     const searchParams = await props.searchParams;
     const paramsString = new URLSearchParams(searchParams as Record<string, string>).toString();
-    const url = `data`
+    const url = `widget`
 
 
     return (
