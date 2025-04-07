@@ -17,9 +17,6 @@ import { DashboardItem } from './components/DashboardItem';
 import { useDebounce } from '@/hooks/useDebounce';
 import { deleteItem, fetchOptions } from './func';
 
-
-
-
 export const DashboardWidget = ({ id }: { id: string }) => {
     // Загрузка данных дашборда
     const { data, loading, error } = useLoadData<DashboardResponse>(`https://api.intervals.ru/dashboard/${id}`);
@@ -109,6 +106,23 @@ export const DashboardWidget = ({ id }: { id: string }) => {
         }
     };
 
+    // Функции для обновления порядка элементов
+    const updateChartOrdering = (index: number, newOrder: number) => {
+        setCharts((prev) => {
+            const updated = [...prev];
+            updated[index] = { ...updated[index], ordering: newOrder };
+            return updated;
+        });
+    };
+
+    const updateWidgetOrdering = (index: number, newOrder: number) => {
+        setWidgets((prev) => {
+            const updated = [...prev];
+            updated[index] = { ...updated[index], ordering: newOrder };
+            return updated;
+        });
+    };
+
     return (
         <ObjectWrapper error={error} loading={loading}>
             {data && (
@@ -127,6 +141,7 @@ export const DashboardWidget = ({ id }: { id: string }) => {
                             key={chart.object_id}
                             item={chart}
                             onDelete={() => deleteItem(setCharts, index)}
+                            onOrderChange={(newOrder) => updateChartOrdering(index, newOrder)}
                         />
                     ))}
 
@@ -162,6 +177,7 @@ export const DashboardWidget = ({ id }: { id: string }) => {
                             key={widget.object_id}
                             item={widget}
                             onDelete={() => deleteItem(setWidgets, index)}
+                            onOrderChange={(newOrder) => updateWidgetOrdering(index, newOrder)}
                         />
                     ))}
 
@@ -190,8 +206,6 @@ export const DashboardWidget = ({ id }: { id: string }) => {
             </Grid>
 
             {/* Сохранение дашборда */}
-
-
             <ObjectSaverFeature
                 url={`https://api.intervals.ru/dashboard/${id}`}
                 body={{

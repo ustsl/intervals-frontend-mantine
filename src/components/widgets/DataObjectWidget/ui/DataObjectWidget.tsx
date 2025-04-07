@@ -41,7 +41,7 @@ export const DataObjectWidget = ({ id }: { id: string }) => {
     }
 
     // Получаем названия столбцов из первой строки контейнера
-    const columns = data && data?.container && (data?.container.length) > 0 && Object.keys(data.container[0]);
+    const columns = data && data?.container && data?.container.length > 0 && Object.keys(data.container[0]);
 
     const headerRow = (
         <Table.Tr>
