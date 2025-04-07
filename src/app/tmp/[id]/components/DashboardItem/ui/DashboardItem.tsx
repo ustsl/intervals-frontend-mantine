@@ -4,7 +4,7 @@ import { ChartItemEntity } from "@/components/entities/ChartItemEntity";
 import { WidgetItemEntity } from "@/components/entities/WidgetItemEntity";
 import { LogoComponent } from "@/components/shared/LogoComponent";
 import { DashboardResponse } from "@/types/dashboard";
-import { Flex, Loader, Stack, Title } from "@mantine/core";
+import { Flex, Grid, Loader, Stack, Title } from "@mantine/core";
 import { useState, useEffect } from "react";
 
 export const DashboardItem = ({ id }: { id: string }) => {
@@ -60,12 +60,13 @@ export const DashboardItem = ({ id }: { id: string }) => {
             </Flex>
 
             {data.widgets && (data.widgets).length > 0 &&
-                <Flex gap="sm">
+                <Grid>
                     {
                         (data.widgets).map(item => {
-                            return <WidgetItemEntity key={item.id} item={item} />
+                            return <Grid.Col span={3} key={item.id}><WidgetItemEntity item={item} /></Grid.Col>
                         })}
-                </Flex>}
+
+                </Grid>}
 
             {data.charts && (data.charts).length > 0 &&
                 <Stack gap={"lg"} >

@@ -78,7 +78,12 @@ export const ChartItemEntity = ({ chart }: { chart: ChartResponse }) => {
         <CompositeChart data={processedChartData} dataKey="x" series={series} h={300} />
       }
 
-      {chart.info && <Text color="dark" size="sm">{chart.info}</Text>}
+      {chart.info && (
+        <Text c="dark" size="m" style={{ whiteSpace: 'pre-wrap' }}>
+          {chart.info}
+        </Text>
+      )}
+
     </Stack>
   );
 };
