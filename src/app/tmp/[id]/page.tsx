@@ -8,12 +8,13 @@ import { Anchor, Container, Stack } from "@mantine/core";
 export default async function DashboardClientPage(props: { params: Promise<any> }) {
     const params = await props.params;
     return (
-        <Container p="md" className={styles.block} mt="xl">
-            <Stack gap={"lg"}>
-
-                <DashboardItem id={params.id} />
-                <Anchor c="gray" href="/" size='sm'>Сделано в INTERVALS</Anchor>
-            </Stack>
-        </Container>
+        <div className={styles.body}>
+            <Container p="lg" className={styles.block} pt={40}>
+                <Stack gap={"lg"}>
+                    <DashboardItem id={params.id} />
+                    <Anchor c="gray" href="/" size='sm'>Сделано в INTERVALS</Anchor>
+                </Stack>
+            </Container>
+        </div>
     );
 }

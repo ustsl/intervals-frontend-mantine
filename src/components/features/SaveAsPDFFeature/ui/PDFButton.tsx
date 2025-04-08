@@ -2,12 +2,10 @@
 
 import React from 'react';
 import { ActionIcon } from '@mantine/core';
-
 import { IconFileTypePdf } from '@tabler/icons-react';
 
 export const PDFButtonFeature = () => {
     const handlePrint = () => {
-        // Вызов стандартного окна печати браузера
         window.print();
     };
 

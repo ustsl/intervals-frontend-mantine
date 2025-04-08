@@ -1,3 +1,8 @@
+.body {
+    background-color: var(--mantine-color-indigo-0);
+}
+
 .block {
-    box-shadow: var(--mantine-shadow-sm)
+    box-shadow: var(--mantine-shadow-sm);
+    background-color: var(--mantine-color-white);
 }
