@@ -1,0 +1,1 @@
+export { ObjectDeleteFeature } from "./ui/ObjectDeleteFeature";

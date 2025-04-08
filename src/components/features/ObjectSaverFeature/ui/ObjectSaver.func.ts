@@ -13,9 +13,6 @@ export async function saveObject(url: string, body: unknown): Promise<void> {
         body: JSON.stringify(body),
     });
 
-
-
-
     if (!response.ok) {
         throw new Error(`Ошибка сохранения: ${response.statusText}`);
     }
