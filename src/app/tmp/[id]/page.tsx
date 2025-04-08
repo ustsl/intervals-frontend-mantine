@@ -1,3 +1,4 @@
+
 import { DashboardItem } from './components/DashboardItem';
 import styles from './page.module.css'
 
@@ -9,6 +10,7 @@ export default async function DashboardClientPage(props: { params: Promise<any> 
     return (
         <Container p="md" className={styles.block} mt="xl">
             <Stack gap={"lg"}>
+
                 <DashboardItem id={params.id} />
                 <Anchor c="gray" href="/" size='sm'>Сделано в INTERVALS</Anchor>
             </Stack>

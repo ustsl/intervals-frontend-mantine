@@ -2,6 +2,7 @@
 
 import { ChartItemEntity } from "@/components/entities/ChartItemEntity";
 import { WidgetItemEntity } from "@/components/entities/WidgetItemEntity";
+import { PDFButtonFeature } from "@/components/features/SaveAsPDFFeature";
 import { LogoComponent } from "@/components/shared/LogoComponent";
 import { DashboardResponse } from "@/types/dashboard";
 import { Flex, Grid, Loader, Stack, Title } from "@mantine/core";
@@ -53,10 +54,13 @@ export const DashboardItem = ({ id }: { id: string }) => {
 
     return (
         <Stack gap={"xl"} mb="xl">
-            <Flex gap="md" align={'center'}>
-                <LogoComponent />
-                <Title order={1} size={35}>{data.title}</Title>
+            <Flex gap={'md'} justify={'space-between'} align={'center'}>
+                <Flex gap="md" align={'center'}>
+                    <LogoComponent />
+                    <Title order={1} size={35}>{data.title}</Title>
 
+                </Flex>
+                <PDFButtonFeature />
             </Flex>
 
             {data.widgets && (data.widgets).length > 0 &&
