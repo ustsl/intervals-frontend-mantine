@@ -1,6 +1,5 @@
 'use client'
 
-import styles from './AuthForm.module.css'
 
 import { useRouter } from 'next/navigation';
 import { loginUser, registerUser } from '@/api/auth';
@@ -9,8 +8,6 @@ import {
     Anchor,
     Button,
     Group,
-    Paper,
-    PaperProps,
     PasswordInput,
     Stack,
     Text,
@@ -19,6 +16,7 @@ import {
 import { useForm } from '@mantine/form';
 import { upperFirst, useToggle } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
+import { FormWrapper } from '@/components/shared/FormWrapper';
 
 // Текст для кнопки авторизации/регистрации
 const oauthToggle = {
@@ -26,7 +24,7 @@ const oauthToggle = {
     register: 'Зарегистрироваться',
 };
 
-export const AuthenticationForm = (props: PaperProps) => {
+export const AuthenticationForm = () => {
     const router = useRouter();
     const [type, toggle] = useToggle<'login' | 'register'>(['login', 'register']);
     const form = useForm({
@@ -87,7 +85,7 @@ export const AuthenticationForm = (props: PaperProps) => {
     };
 
     return (
-        <Paper radius="md" p="xl" withBorder {...props} className={styles.block}>
+        <FormWrapper>
             <Text size="lg" fw={500}>
                 Введите данные для {type === 'login' ? 'входа' : 'регистрации'}
             </Text>
@@ -137,7 +135,17 @@ export const AuthenticationForm = (props: PaperProps) => {
                         {upperFirst(oauthToggle[type])}
                     </Button>
                 </Group>
+
             </form>
-        </Paper>
+            <Anchor
+                component="a"
+                type="a"
+                c="dimmed"
+                size="xs"
+                href="/oauth/forgot"
+            >
+                Забыли пароль?
+            </Anchor>
+        </FormWrapper>
     );
 };

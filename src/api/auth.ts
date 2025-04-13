@@ -7,7 +7,6 @@ export const loginUser = async (email: string, password: string) => {
     formData.append("password", password);
 
     try {
-        console.log(email, password)
         const response = await fetch("https://api.intervals.ru/auth/jwt/login", {
             method: "POST",
             body: formData,
