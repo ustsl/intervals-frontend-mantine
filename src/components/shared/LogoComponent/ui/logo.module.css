@@ -1,10 +1,18 @@
+.a {
+    height: fit-content;
+    width: fit-content;
+    max-height: 40px;
+
+}
+
 .logo {
     width: 40px;
+    height: 40px;
     height: fit-content;
     transition: .2s;
 }
 
-.logo:hover {
+.a:hover {
     filter: drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.25));
 }
 

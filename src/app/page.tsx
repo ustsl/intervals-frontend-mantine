@@ -13,10 +13,10 @@ export default function LandingPage() {
 
     <>
       <Container size={800} p={'md'}>
-        <Flex align={'center'} gap={'md'} justify={'space-between'} pt={30}>
-          <Flex gap={'md'} align={'center'} >
-            <LogoComponent size="XL" />
-            <Title order={1} size={50}>INTERVALS</Title>
+        <Flex align={'center'} gap={'md'} justify={'space-between'} pt={30} wrap={"wrap"}>
+          <Flex gap={'xs'} align={'center'} >
+            <LogoComponent size="M" />
+            <Title order={1} size={"xl"}>INTERVALS</Title>
           </Flex>
           <QuickSpeak />
         </Flex>

@@ -8,7 +8,7 @@ import { baseSizeType } from '@/types/base';
 export const LogoComponent = ({ size }: { size?: baseSizeType }) => {
 
     return (
-        <Link href="/">
+        <Link href="/" className={styles.a}>
             <Image
                 src={logo}
                 className={`${styles.logo} ${size && styles[`size${size}`]}`}
